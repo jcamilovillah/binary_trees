@@ -1,54 +1,20 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_balance - measures the balance factor of a binary tree
+ * binary_tree_sibling - finds the sibling of a node
  *
- * @tree: pointer to the root node of the tree to measure the balance factor
+ * @node: pointer to the node to find the sibling
  *
- * Return: Balance factor. 0 if tree is NULL
+ * Return: pointer to sibling node. NULL if no sibling or node or parent NULL
  */
-int binary_tree_balance(const binary_tree_t *tree)
+binary_tree_t *binary_tree_sibling(binary_tree_t *node)
 {
-	int h_left = 1;
-	int h_right = 1;
+	binary_tree_t *parent;
 
-	if (tree == NULL)
-		return (0);
-	if (tree->left)
-		h_left += height(tree->left);
-	else
-		h_left = 0;
-	if (tree->right)
-		h_right += height(tree->right);
-	else
-		h_right = 0;
-	return (h_left - h_right);
-}
-
-/**
- * height - gets the height of a tree
- *
- * @tree: tree to get the height from
- *
- * Return: height of the tree
- */
-int height(const binary_tree_t *tree)
-{
-	if (tree == NULL)
-		return (-1);
-	else
-		return (1 + max(height(tree->left), height(tree->right)));
-}
-
-/**
- * max - get the max number between two
- *
- * @a: int
- * @b: int
- *
- * Return: ax between a and b
- */
-int max(int a, int b)
-{
-	return ((a >= b) ? a : b);
+	parent = node->parent;
+	if (node == NULL || node->parent == NULL)
+		return (NULL);
+	if (parent->left == node)
+		return (parent->right);
+	return (parent->left);
 }
